@@ -4,6 +4,7 @@ import numpy as np
 from stable_baselines3 import PPO
 from stable_baselines3.common.evaluation import evaluate_policy
 import gymnasium as gym
+import os
 
 
 app = Flask(__name__)
@@ -13,8 +14,12 @@ def hello():
         return 'Hello, World!'
 
 
+global player_1
+global player_2
+
 player_1 = []
 player_2 = []
+
 
 @app.route('/parse-json', methods=['GET'])
 def parse_json():
@@ -45,17 +50,17 @@ def parse_json():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/run-all', methods=['GET'])
-def parse_json():
+def run_all():
     player_1_sum = sum(player_1)
     player_2_sum = sum(player_2)
 
     if player_1_sum < player_2_sum:
-        run_visualization2('../saved_models/1.zip')
-        run_visualization1(np.random.choice(['../saved_models/2', '../saved_models/3', '../saved_models/4.zip']))
+        run_visualization2("../save_models/1")
+        run_visualization1(np.random.choice(['../save_models/2', '../save_models/3', '../save_models/4']))
         return jsonify({"message": "Player 1 wins!"}), 200
     else:
-        run_visualization1("../saved_models/1.zip")
-        run_visualization2(np.random.choice(['../saved_models/2', '../saved_models/3', '../saved_models/4.zip']))
+        run_visualization1("../save_models/1")
+        run_visualization2(np.random.choice(['../save_models/2', '../save_models/3', '../save_models/4']))
         return jsonify({"message": "Player 2 wins!"}), 200
 
 
