@@ -15,14 +15,21 @@ player1Button.addEventListener("click", async () => {
   const recordingContainer = document.querySelector("#recordingContainer1");
   player1Button.classList.add("hidden");
   recordingContainer.classList.remove("hidden");
-  player2Button.disabled = true;
+  player2Button.disabled = false;
   player2Button.classList.add("disabled");
   try {
     const response = await fetch("/getfocuslevels", { method: "GET" });
+    const response2 = await fetch("http://127.0.0.1:5000/parse-json", { method: "GET" });
     const data = await response.json();
     // Whatever we want to do with the data recorded from the the EEG
     // Put the logic here
-
+    console.log(data['alpha']);
+  } catch (error) {
+    console.error(error.message);
+  }
+  try {
+    const response = await fetch(("http://127.0.0.1:5000/run-all"),{ method: "GET" });
+    console.log(data);
   } catch (error) {
     console.error(error.message);
   }
@@ -43,14 +50,15 @@ player2Button.addEventListener("click", async () => {
   const recordingContainer = document.querySelector("#recordingContainer2");
   player2Button.classList.add("hidden");
   recordingContainer.classList.remove("hidden");
-  player1Button.disabled = true;
+  player1Button.disabled = false;
   player1Button.classList.add("disabled");
   try {
     const response = await fetch("/getfocuslevels", { method: "GET" });
+    const response2 = await fetch("http://127.0.0.1:5000/parse-json", { method: "GET" });
     const data = await response.json();
     // Whatever we want to do with the data recorded from the the EEG
     // Put the logic here
-    
+    console.log(data['alpha']);
   } catch (error) {
     console.error(error.message);
   }
