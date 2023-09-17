@@ -1,0 +1,162 @@
+body, html {
+  margin: 0;
+  padding: 0 ;
+  box-sizing: border-box;
+  font-family: 'IBM Plex Mono', monospace;
+  background-color: #111;
+  font-size: 62.5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+/* Home Page Styling */
+.mainHeading {
+  font-size: 6rem;
+  font-weight: 600;
+  line-height: 7.8rem;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #FF0000;
+  margin: 0;
+}
+
+.homeStart:link,
+.homeStart:visited,
+.homeStart:hover,
+.homeStart:active {
+  text-decoration: none;
+  width: 14.6rem;
+  font-size: 2.5rem;
+  text-align: left;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.homeMainContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 5rem;
+  gap: 5rem;
+}
+
+.homeTextContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+/* Home Page Styling */
+
+/* Game Page Styling */
+.gameMainContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.gameStart {
+  width: 14.6rem;
+  font-size: 2.5rem;
+  text-align: left;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.player {
+  font-size: 4rem;
+}
+
+.player1 {
+  color: #FF0000;
+}
+
+.player2 {
+  color: #0702FF;
+}
+
+.gameTextContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.gameTextContainer.player1Container {
+  border-right: .2rem dashed #565353;
+}
+/* Game Page Styling */
+
+/* Utilities styling */
+.disabled {
+  color: #565353;
+}
+.recordingContainer1.hidden,
+.recordingContainer2.hidden {
+  display: none;
+}
+.player1Start.hidden, 
+.player2Start.hidden {
+  display: none;
+}
+.shown {
+  display: block;
+}
+.recordingText {
+  font-size: 2rem;
+  color: #fff;
+}
+.recordingContainer1,
+.recordingContainer2 {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.pulsatingCircle {
+  border: none;
+  background-color: #111;
+  color: #21E900;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulsate 2.5s infinite;
+}
+@keyframes pulsate {
+  0% {
+    opacity: 1; /* Fully visible */
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+video {
+  height: 20%;
+  width: 50%;
+  border-radius: 1.5rem;
+  border: .1rem solid #565353;
+  /* padding: 1rem; */
+  overflow: hidden;
+}
+/* Utilities styling */
