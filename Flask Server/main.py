@@ -3,67 +3,70 @@ import requests
 import numpy as np
 from stable_baselines3 import PPO
 from stable_baselines3.common.evaluation import evaluate_policy
-import gymnasium as gym
+import gym
 import os
-
 
 app = Flask(__name__)
 
-@app.route('/')
-def hello():
-        return 'Hello, World!'
-
-
-global player_1
-global player_2
-
+# Initialize player lists
 player_1 = []
 player_2 = []
 
+@app.route('/')
+def hello():
+    return 'Hello, World!'
 
 @app.route('/parse-json', methods=['GET'])
 def parse_json():
+    global player_1
+    global player_2
+
     try:
         # Get the JSON data from the request
-        # We parse json from:
-        print('welcome')
         json_link = "http://localhost:3000/getfocuslevels"
-        # We take json from the flask link
-        json_data = requests.get(json_link).json()
-        
-        if json_data is not None:
-            # Parse the JSON data
-            # In this example, we'll simply log the parsed JSON data
-            print("Parsed JSON:")
+        response = requests.get(json_link)
 
-            if player_1:
-                player_2 = json_data['alpha'] - json_data['beta']
-            else:
-                player_1 = json_data['alpha'] - json_data['beta']
+        if response.status_code == 200:
+            json_data = response.json()
+            index = len(json_data[0]) - 1
+            while index >= 0:
+                newvalue = json_data[0]['alpha'][index] - json_data[0]['beta'][index]
+                if player_1 == []:
+                    player_1.append(newvalue)
+                else:
+                    player_2.append(newvalue)
+                index -= 1
+            # if player_1 == []:
+            #     player_2.append(json_data[0]['alpha'] - json_data[0]['beta'])
+            # else:
+            #     player_1.append(json_data[0]['alpha'] - json_data[0]['beta'])
 
-            # For total, checks if most of the values most of the array is larger than 5 or not
             return jsonify({"message": "JSON data successfully parsed."}), 200
         else:
-            return jsonify({"error": "Invalid JSON data."}), 400
+            return jsonify({"error": "Failed to fetch JSON data."}), 500
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @app.route('/run-all', methods=['GET'])
 def run_all():
+    global player_1
+    global player_2
+
     player_1_sum = sum(player_1)
     player_2_sum = sum(player_2)
 
+    model_choices = [os.path.abspath(p) for p in ['../Brain-Battle/save_models/2', '../Brain-Battle/save_models/3', '../Brain-Battle/save_models/4']]
+    print(model_choices)
+
     if player_1_sum < player_2_sum:
-        run_visualization2("../save_models/1")
-        run_visualization1(np.random.choice(['../save_models/2', '../save_models/3', '../save_models/4']))
+        # Call visualization function 2
+        run_visualization2(np.random.choice(model_choices))
         return jsonify({"message": "Player 1 wins!"}), 200
     else:
-        run_visualization1("../save_models/1")
-        run_visualization2(np.random.choice(['../save_models/2', '../save_models/3', '../save_models/4']))
+        # Call visualization function 1
+        run_visualization1(np.random.choice(model_choices))
         return jsonify({"message": "Player 2 wins!"}), 200
-
-
 
 def run_visualization1(link):
     print('Visualization 1')
