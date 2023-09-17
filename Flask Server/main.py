@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import requests
 import numpy as np
 from stable_baselines3 import PPO
@@ -7,6 +8,7 @@ import gym
 import os
 
 app = Flask(__name__)
+CORS(app)
 
 # Initialize player lists
 player_1 = []
@@ -57,7 +59,7 @@ def run_all():
     player_2_sum = sum(player_2)
 
     model_choices = [os.path.abspath(p) for p in ['../Brain-Battle/save_models/2', '../Brain-Battle/save_models/3', '../Brain-Battle/save_models/4']]
-    print(model_choices)
+    # print(model_choices)
 
     if player_1_sum < player_2_sum:
         # Call visualization function 2
