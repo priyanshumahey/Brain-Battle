@@ -14,20 +14,9 @@ rewards = []
 
 vec_env = model.get_env()
 obs = vec_env.reset()
-for i in range(40000):
-    action = model.predict(obs, deterministic=True)
-    print(action)
-    obs, reward, done, info = vec_env.step(action[0], action[1] * 0.3, action[2])
-    rewards.append(reward)
-
-model.save("./ppo_car")
+for i in range(1000):
+    action, _states = model.predict(obs, deterministic=True)
+    obs, rewards, dones, info = vec_env.step(action)
+    vec_env.render("human")
 
 print(sum(rewards) / len(rewards))
-
-# PLot the rewards
-import matplotlib.pyplot as plt
-
-plt.plot(rewards)
-plt.show()
-
-plt.savefig('ppo_car.png')

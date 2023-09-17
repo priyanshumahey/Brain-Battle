@@ -39,9 +39,11 @@ menv = gym.make("CarRacing-v2", render_mode="human")
 env = make_vec_env(lambda: menv, n_envs=1)
 
 model = PPO("MlpPolicy", env, verbose=1)
-model.learn(total_timesteps=60000)
+model.learn(total_timesteps=100000)
 
 model.save("./ppo_car")
+
+del model # remove to demonstrate saving and loading
 
 model.load("./ppo_car")
 model = PPO.load("./ppo_car")
